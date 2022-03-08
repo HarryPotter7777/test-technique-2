@@ -18,7 +18,7 @@ describe('TodoController (e2e)', () => {
                 TypeOrmModule.forRoot({
                     host: 'localhost',
                     type: 'postgres',
-                    database: 'todo',
+                    database: 'test',
                     username: 'admin',
                     password: 'admin',
                     entities: [Todo],
@@ -48,6 +48,15 @@ describe('TodoController (e2e)', () => {
             .send(todo)
             .expect(201);
         expect(response.body).toEqual(todo);
+    });
+
+    it(`/CREATE a todo with a default description value`, async () => {
+        const todo = { id: 1, title: 'test', completed: false };
+        const response = await request(app.getHttpServer())
+            .post('/api/todo/create')
+            .send(todo)
+            .expect(201);
+        expect(response.body).toEqual({ ...todo, description: "" });
     });
 
     it(`/FIND ONE todo`, async () => {

@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './seed.module';
+import { SeederModule } from './seeder/seeder.module';
 import { Seeder } from './seeder/seeder.service';
 
 async function bootstrap() {
-    NestFactory.createApplicationContext(AppModule)
+    NestFactory.createApplicationContext(SeederModule)
         .then(appContext => {
             const seeder = appContext.get(Seeder);
             seeder

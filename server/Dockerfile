@@ -25,4 +25,4 @@ COPY --from=builder /app/node_modules/ ./node_modules/
 COPY --from=builder /app/dist/ ./dist/
 
 EXPOSE 5500
-CMD ["npm", "run", "start:prod"]
+CMD ["sh", "-c", "npm run seed ; npm run start:prod"]

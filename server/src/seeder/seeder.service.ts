@@ -1,7 +1,6 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { TodoService } from '../todo/todo.service';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getRepository, DeleteResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateTodoDto } from 'src/todo/dto/create-todo';
 import { Todo } from '../todo/todo.entity';
 
@@ -12,14 +11,18 @@ export class Seeder {
         private readonly todoRepository: Repository<Todo>,
     ) { }
     async seed() {
-        for (let i = 0; i < 5; i++) {
-            try {
-                await this.todoRepository.create({
-                    title: `title_seed_${i}`,
-                    description: ''
-                } as CreateTodoDto)
-            } catch (err) {
-                console.log(err);
+        const todoCount = await this.todoRepository.count();
+        if (todoCount < 5) {
+            for (let i = 0; i < 5; i++) {
+                try {
+                    await this.todoRepository.save(<CreateTodoDto>{
+                        title: `title_seed_${i}`,
+                        description: '',
+                        completed: Math.random() < 0.5
+                    });
+                } catch (err) {
+                    throw err;
+                }
             }
         }
     }

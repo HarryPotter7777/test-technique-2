@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { INestApplication } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { TodoModule } from './../src/todo/todo.module';
 import { Todo } from '../src/todo/todo.entity';
-import { Connection } from 'typeorm';
+import { Connection, getConnectionOptions } from 'typeorm';
 
 describe('TodoController (e2e)', () => {
     let app: INestApplication;
@@ -15,19 +15,20 @@ describe('TodoController (e2e)', () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [
                 TodoModule,
-                TypeOrmModule.forRoot({
-                    host: 'localhost',
-                    type: 'postgres',
-                    database: 'test',
-                    username: 'admin',
-                    password: 'admin',
-                    entities: [Todo],
-                    synchronize: true,
-                }),
+                TypeOrmModule.forRootAsync({
+                    useFactory: async () => {
+                        const config = await getConnectionOptions();
+                        return <TypeOrmModuleOptions>{
+                            ...config, entities: [Todo],
+                            logging: false, synchronize: true,
+                            database: 'test',
+                            host: 'test_postgres_db'
+                        };
+                    }
+                })
             ],
         })
             .compile();
-
         app = moduleFixture.createNestApplication();
         connection = app.get(Connection);
         app.useGlobalPipes(new ValidationPipe({

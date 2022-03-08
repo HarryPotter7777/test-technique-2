@@ -1,19 +1,27 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TodoModule } from '../todo/todo.module';
-import { TodoService } from 'src/todo/todo.service';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Seeder } from './seeder.service';
 import { Todo } from '../todo/todo.entity';
+import { getConnectionOptions } from 'typeorm';
 
 /**
  * Import and provide seeder classes.
  *
  * @module
  */
- @Module({
+@Module({
     imports: [
+        TypeOrmModule.forRootAsync({
+            useFactory: async () => {
+                const config = await getConnectionOptions();
+                return <TypeOrmModuleOptions>{
+                    ...config, entities: [Todo],
+                    logging: false, synchronize: true
+                };
+            }
+        }),
         TypeOrmModule.forFeature([Todo])
     ],
     providers: [Seeder],
-  })
-  export class SeederModule {}
+})
+export class SeederModule { }

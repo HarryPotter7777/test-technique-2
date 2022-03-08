@@ -24,7 +24,7 @@
     "redux-thunk": "^2.4.1",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "http://localhost:5500",
+  "proxy": "http://server:5500",
   "scripts": {
     "start-insecure-ssl": "react-scripts --openssl-legacy-provider start",
     "start": "react-scripts start",

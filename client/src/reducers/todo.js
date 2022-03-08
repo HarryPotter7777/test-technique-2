@@ -31,22 +31,7 @@ export default function users(state = initialState, action = {}) {
                 data:
                     index !== -1
                         ? sortByCompleted(state.data.map((todoState, i) =>
-                            i === index ? { ...todoState, ...todo } : todo
-                        ))
-                        : state.data,
-            };
-        }
-
-        case "todo/more": {
-            const { todo } = action.data;
-            const { id } = todo;
-            const index = state.data.findIndex((todo) => todo.id === id);
-            return {
-                ...state,
-                data:
-                    index !== -1
-                        ? sortByCompleted(state.data.map((todoState, i) =>
-                            i === index ? { ...todoState, more: todoState.more ? !todoState.more : true } : todoState
+                            i === index ? { ...todoState, ...todo } : todoState
                         ))
                         : state.data,
             };

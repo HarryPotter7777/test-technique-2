@@ -18,7 +18,7 @@ export default function users(state = initialState, action = {}) {
         case "todo/create": {
             return {
                 ...state,
-                data: sortByCompleted([...state.data, action.data.todo])
+                data: sortByCompleted([action.data.todo, ...state.data])
             };
         }
 

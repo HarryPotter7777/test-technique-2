@@ -17,8 +17,10 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Modal from './modal';
 import ClearIcon from '@mui/icons-material/Clear';
-import SaveIcon from '@mui/icons-material/Save';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import CheckIcon from '@mui/icons-material/Check';
+import TodoHeader from './todo-header';
+import { blue } from '@mui/material/colors';
 
 class Todo extends Component {
     state = {
@@ -84,19 +86,7 @@ class Todo extends Component {
         return (
             <Container>
                 <Box sx={{ bgcolor: "#fafafa", px: 6, py: 2, minHeight: "100vh" }}>
-                    <Grid container direction="column" justifyContent="center" alignItems="center" sx={{ mb: 6 }}>
-                        <Stack spacing={2} sx={{ pt: 2 }}>
-                            <TextField id="outlined-basic" label="Title" variant="outlined" color="primary"
-                                focused onChange={this.handleText.bind(this)} required />
-                            <TextareaAutosize
-                                aria-label="empty textarea"
-                                placeholder="Description"
-                                style={{ width: 400, height: 100 }}
-                                onChange={this.handleDescription.bind(this)}
-                            />
-                            <Button variant="contained" onClick={this.add.bind(this)}> New </Button>
-                        </Stack>
-                    </Grid>
+                    <TodoHeader />
                     <List sx={{ width: '100%' }} component="nav" aria-label="mailbox folders">
                         {
                             this.props.todos.map((todo, i) => {
@@ -105,22 +95,22 @@ class Todo extends Component {
                                         <ListItem sx={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
                                             <ListItemText onClick={this.handleModal.bind(this, todo)}
                                                 sx={{ cursor: 'pointer' }}>
-                                                {todo.title}
+                                                <span style={{ color: blue[800] }}>{todo.title}</span>
                                             </ListItemText>
                                             <Modal toggle={this.state.toggleModal[todo.id] || false} close={this.handleModal.bind(this, todo)}>
                                                 <Grid item xs={12} sm={12}>
                                                     <Box sx={{ display: 'flex' }}>
-                                                        <Stack spacing={2} sx={{ pt: 2 }}>
+                                                        <Stack spacing={2} sx={{ pt: 0 }}>
+                                                            <Typography variant="h6"> Update </Typography>
+                                                            <Box pb={2}>
+                                                                <Divider></Divider>
+                                                            </Box>
                                                             <TextField id="outlined-basic" label="Title" variant="outlined"
                                                                 color="primary" focused
                                                                 onChange={this.updateState.bind(this, todo, 'title')}
                                                                 defaultValue={todo.title}
                                                                 required
                                                             />
-                                                            <Typography variant="h6" gutterBottom component="div">
-                                                                Description
-                                                            </Typography>
-                                                            <Divider style={{ marginTop: '0.3rem' }} />
                                                             <TextareaAutosize
                                                                 aria-label="empty textarea"
                                                                 placeholder="Description"
@@ -128,11 +118,14 @@ class Todo extends Component {
                                                                 defaultValue={todo.description}
                                                                 onChange={this.updateState.bind(this, todo, 'description')}
                                                             />
+                                                            <Box py={2}>
+                                                                <Divider></Divider>
+                                                            </Box>
                                                             <ButtonGroup variant="contained" disableElevation>
                                                                 <Grid container justifyContent='space-between'>
-                                                                    <Button variant="contained" startIcon={<SaveIcon />}
+                                                                    <Button variant="contained" startIcon={<CheckIcon />}
                                                                         onClick={this.save.bind(this, todo)}>
-                                                                        Save
+                                                                        Validate
                                                                     </Button>
                                                                     <Button variant="contained" startIcon={<ClearIcon />} color="error"
                                                                         onClick={this.handleModal.bind(this, todo)}>

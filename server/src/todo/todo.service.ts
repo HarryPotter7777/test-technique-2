@@ -18,12 +18,15 @@ export class TodoService {
         todo.title = createTodoDto.title;
         todo.description = createTodoDto.description ?? '';
         todo.completed = createTodoDto.completed ?? false;
-
         return this.todoRepository.save(todo);
     }
 
     findAll(): Promise<Todo[]> {
-        return this.todoRepository.find();
+        return this.todoRepository.find({
+            order: {
+                updated_at: 'DESC'
+            }
+        });
     }
 
     findOne(id: string): Promise<Todo> {

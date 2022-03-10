@@ -54,20 +54,23 @@ class TodoHeader extends Component {
         return (
             <>
                 <Grid container alignItems="center">
-                    <Button variant="contained" onClick={this.handleModal.bind(this)} startIcon={<AddTaskIcon/>}>
+                    <Button data-test="add-task" variant="contained" onClick={this.handleModal.bind(this)} startIcon={<AddTaskIcon/>}>
                         Add task
                     </Button>
                 </Grid>
-                <Modal toggle={this.state.toggleModal} close={this.handleModal.bind(this)}>
+                <Modal data-test="modal-add" toggle={this.state.toggleModal} close={this.handleModal.bind(this)}>
                     <Grid container direction="column" justifyContent="center" alignItems="center" sx={{ mb: 0 }}>
                         <Stack spacing={2}>
                             <Typography variant="h6"> Add </Typography>
                             <Box pb={2}>
                                 <Divider></Divider>
                             </Box>
-                            <TextField id="outlined-basic" label="Title" variant="outlined" color="primary"
+                            <TextField
+                                data-test="modal-add-title"
+                                id="outlined-basic" label="Title" variant="outlined" color="primary"
                                 focused onChange={this.handleText.bind(this)} required />
-                            <TextareaAutosize 
+                            <TextareaAutosize
+                                data-test="modal-add-description"
                                 aria-label="empty textarea"
                                 placeholder="Description"
                                 style={{ width: 400, height: 100, resize: 'none' }}
@@ -79,7 +82,8 @@ class TodoHeader extends Component {
                             <ButtonGroup variant="contained" disableElevation sx={{ marginTop: '30px' }}>
                                 <Grid container justifyContent="space-between">
                                     <Button variant="contained" startIcon={<CheckIcon />}
-                                        onClick={this.add.bind(this)} sx={{ borderRadius: 0 }}>
+                                        onClick={this.add.bind(this)} sx={{ borderRadius: 0 }}
+                                        data-test="modal-add-submit">
                                         Validate
                                     </Button>
                                     <Button variant="contained" startIcon={<ClearIcon />} color="error"

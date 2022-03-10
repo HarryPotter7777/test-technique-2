@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "build-insecure-ssl": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
+    "e2e-test": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^9.5.1"
   }
 }

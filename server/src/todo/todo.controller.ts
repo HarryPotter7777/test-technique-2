@@ -18,7 +18,7 @@ export class TodoController {
     }
 
     @Post('one')
-    findOne(@Param('id') id: string): Promise<Todo> {
+    async findOne(@Query('id') id: string): Promise<Todo> {
         return this.todoService.findOne(id);
     }
 
@@ -33,7 +33,7 @@ export class TodoController {
     }
 
     @Delete('delete')
-    remove(@Param('id') id: string): Promise<void> {
+    remove(@Query('id') id: string): Promise<void> {
         return this.todoService.remove(id);
     }
 }

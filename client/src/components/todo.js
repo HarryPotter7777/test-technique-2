@@ -95,9 +95,9 @@ class Todo extends Component {
                                         <ListItem sx={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
                                             <ListItemText onClick={this.handleModal.bind(this, todo)}
                                                 sx={{ cursor: 'pointer' }}>
-                                                <span style={{ color: blue[800] }}>{todo.title}</span>
+                                                <span style={{ color: blue[800] }} data-test="todo-title">{todo.title}</span>
                                             </ListItemText>
-                                            <Modal toggle={this.state.toggleModal[todo.id] || false} close={this.handleModal.bind(this, todo)}>
+                                            <Modal data-test="modal-update" toggle={this.state.toggleModal[todo.id] || false} close={this.handleModal.bind(this, todo)}>
                                                 <Grid item xs={12} sm={12}>
                                                     <Box sx={{ display: 'flex' }}>
                                                         <Stack spacing={2} sx={{ pt: 0 }}>
@@ -105,13 +105,14 @@ class Todo extends Component {
                                                             <Box pb={2}>
                                                                 <Divider></Divider>
                                                             </Box>
-                                                            <TextField id="outlined-basic" label="Title" variant="outlined"
+                                                            <TextField data-test="modal-update-title" id="outlined-basic" label="Title" variant="outlined"
                                                                 color="primary" focused
                                                                 onChange={this.updateState.bind(this, todo, 'title')}
                                                                 defaultValue={todo.title}
                                                                 required
                                                             />
                                                             <TextareaAutosize
+                                                                data-test="modal-update-description"
                                                                 aria-label="empty textarea"
                                                                 placeholder="Description"
                                                                 style={{ width: 400, height: 100, marginTop: '1.5em', marginBottom: '0.5em' }}
@@ -124,7 +125,9 @@ class Todo extends Component {
                                                             <ButtonGroup variant="contained" disableElevation>
                                                                 <Grid container justifyContent='space-between'>
                                                                     <Button variant="contained" startIcon={<CheckIcon />}
-                                                                        onClick={this.save.bind(this, todo)}>
+                                                                        onClick={this.save.bind(this, todo)} 
+                                                                        data-test="modal-update-submit"
+                                                                        >
                                                                         Validate
                                                                     </Button>
                                                                     <Button variant="contained" startIcon={<ClearIcon />} color="error"
@@ -141,7 +144,7 @@ class Todo extends Component {
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox checked={todo.completed}
-                                                            onChange={this.complete.bind(this, todo)} />
+                                                            onChange={this.complete.bind(this, todo)} data-test="todo-checkbox"/>
                                                     }
                                                     label=""
                                                 />

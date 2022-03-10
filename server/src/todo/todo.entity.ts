@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, OneToMany, JoinColumn, AfterUpdate, BeforeUpdate } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('todo')
 export class Todo {
@@ -13,4 +13,10 @@ export class Todo {
 
     @Column({ type: 'boolean', default: false })
     completed: boolean;
+
+    @CreateDateColumn()
+    created_at: Date;
+    
+    @UpdateDateColumn()
+    updated_at: Date;
 }

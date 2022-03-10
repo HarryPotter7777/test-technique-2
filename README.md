@@ -43,7 +43,7 @@ cd server && npm run test
 ## Tech stack
 - NodeJS & NestJS
 - React & Redux
-- Postgree
+- PostgreSQL
 - Docker
 - Cypress
 - Jest
